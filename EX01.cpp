@@ -7,18 +7,10 @@
 
 using namespace std;
 
-void superiorDireito();
-void superiorEsquerdo();
-void inferiorDireito();
-void inferiorEsquerdo();
+void desenhaCampos( int x_start, int y_start, bool sup);
+
 void pecasVermelhas();
 void pecasAzuis();
-
-//declaracao das variaveis
-	int poly [8];		 					//matriz para desenhar os triangulos
-	int xcima, ycima, xbaixo, ybaixo;		//coordenadas bola
-	int raio = 20;							//raio bola
-	int i = 0;								//contador
 		
 int main(){
 		
@@ -45,318 +37,61 @@ int main(){
 	bar(376, 70, 401, 120); 
 	setfillstyle(1, YELLOW);		//dobradiça inferior direita	
 	bar(376, 380, 401, 430); 
+	
+	desenhaCampos(53,200,true);
+	desenhaCampos(428,200,true);
+	
+	desenhaCampos(53,300,false);
+	desenhaCampos(428,300,false);
 
-	superiorDireito();
-	superiorEsquerdo();
-	inferiorDireito();
-	inferiorEsquerdo();
 	pecasVermelhas();
 	pecasAzuis();
 	getch();
 }
-//origem , diminui x e y , mantem y e sobe x, origem
-void superiorDireito()
-{
-	setfillstyle(1, BLACK);		//primeiro triangulo superior esquerdo
-	setcolor(BLACK);
-	poly[0] = 52;
-	poly[1] = 200;
-	poly[2] = 25;
-	poly[3] = 25;
-	poly[4] = 79;
-	poly[5] = 25;
-	poly[6] = 52;
-	poly[7] = 200;
-	fillpoly(4, poly);
 
-	setfillstyle(1, DARKGRAY);		//segundo triangulo superior esquerdo
-	setcolor(DARKGRAY);
-	poly[0] = 106;
-	poly[1] = 200;
-	poly[2] = 79;
-	poly[3] = 25;
-	poly[4] = 133;
-	poly[5] = 25;
-	poly[6] = 106;
-	poly[7] = 200;
-	fillpoly(4, poly);
-	
-	setfillstyle(1, BLACK);		//terceiro triangulo superior esquerdo
-	setcolor(BLACK);
-	poly[0] = 160;
-	poly[1] = 200;
-	poly[2] = 133;
-	poly[3] = 25;
-	poly[4] = 187;
-	poly[5] = 25;
-	poly[6] = 160;
-	poly[7] = 200;
-	fillpoly(4, poly);
+void desenhaCampos( int x_start, int y_start, bool sup)
+{	
+	int poly_t [8];
+	// primeiro X
+	poly_t[0] = x_start;
+	// Pimeiro Y
+	poly_t[1] = y_start;
+			
+	for(int v = 0; v < 6; v++)
+	{
+		poly_t[2] = poly_t[0] - 27;
+		
+		if(sup)
+			poly_t[3] = poly_t[1] - 175;
+		else
+			poly_t[3] = poly_t[1] + 175;
 
-	setfillstyle(1, DARKGRAY);		//quarto triangulo superior esquerdo
-	setcolor(DARKGRAY);
-	poly[0] = 214;
-	poly[1] = 200;
-	poly[2] = 187;
-	poly[3] = 25;
-	poly[4] = 241;
-	poly[5] = 25;
-	poly[6] = 214;
-	poly[7] = 200;
-	fillpoly(4, poly);
-	
-	setfillstyle(1, BLACK);		//quinto triangulo superior esquerdo
-	setcolor(BLACK);
-	poly[0] = 268;
-	poly[1] = 200;
-	poly[2] = 241;
-	poly[3] = 25;
-	poly[4] = 295;
-	poly[5] = 25;
-	poly[6] = 268;
-	poly[7] = 200;
-	fillpoly(4, poly);
-	
-	setfillstyle(1, DARKGRAY);		//sexto triangulo superior esquerdo
-	setcolor(DARKGRAY);
-	poly[0] = 321,5;
-	poly[1] = 200;
-	poly[2] = 295;
-	poly[3] = 25;
-	poly[4] = 348;
-	poly[5] = 25;
-	poly[6] = 322;
-	poly[7] = 200;
-	fillpoly(4, poly);
+		poly_t[4] = poly_t[0] + 27;
+		poly_t[5] = poly_t[3];
+
+		poly_t[6] = poly_t[0];
+		poly_t[7] = poly_t[1];
+		
+		if(v % 2){
+			setfillstyle(1, DARKGRAY);	
+			setcolor(DARKGRAY);
+			
+		}else{
+			setfillstyle(1, BLACK);	
+			setcolor(BLACK);
+		}
+		fillpoly(4, poly_t);
+		
+		poly_t[0] += 54; // incrementa para o próximo triâgulo		
+	}
 }
 
-void superiorEsquerdo()
-{
-	setfillstyle(1, BLACK);		//primeiro triangulo superior direito
-	setcolor(BLACK);
-	poly[0] = 428;
-	poly[1] = 200;
-	poly[2] = 401;
-	poly[3] = 25;
-	poly[4] = 455;
-	poly[5] = 25;
-	poly[6] = 428;
-	poly[7] = 200;
-	fillpoly(4, poly);
-	
-	setfillstyle(1, DARKGRAY);		//segundo triangulo superior direito
-	setcolor(DARKGRAY);
-	poly[0] = 483;	//soma 54 do [0] anterior
-	poly[1] = 200;	//mantém
-	poly[2] = 456;	//copia o [4] anterior
-	poly[3] = 25;	//mantém
-	poly[4] = 510;	//soma 54 do [2] 
-	poly[5] = 25;	//mantém
-	poly[6] = 483;	//soma 54 do [0] anterior
-	poly[7] = 200;	//mantém
-	fillpoly(4, poly);
-	
-	setfillstyle(1, BLACK);		//terceiro triangulo superior direito
-	setcolor(BLACK);
-	poly[0] = 537;
-	poly[1] = 200;
-	poly[2] = 510;
-	poly[3] = 25;
-	poly[4] = 564;
-	poly[5] = 25;
-	poly[6] = 537;
-	poly[7] = 200;
-	fillpoly(4, poly);
-	
-	setfillstyle(1, DARKGRAY);		//quarto triangulo superior direito
-	setcolor(DARKGRAY);
-	poly[0] = 591;
-	poly[1] = 200;
-	poly[2] = 564;
-	poly[3] = 25;
-	poly[4] = 618;
-	poly[5] = 25;
-	poly[6] = 591;
-	poly[7] = 200;
-	fillpoly(4, poly);
-	
-	setfillstyle(1, BLACK);			//quinto triangulo superior direito
-	setcolor(BLACK);
-	poly[0] = 645;
-	poly[1] = 200;
-	poly[2] = 618;
-	poly[3] = 25;
-	poly[4] = 672;
-	poly[5] = 25;
-	poly[6] = 645;
-	poly[7] = 200;
-	fillpoly(4, poly);
-	
-	setfillstyle(1, DARKGRAY);		//sexto triangulo superior direito
-	setcolor(DARKGRAY);
-	poly[0] = 699;
-	poly[1] = 200;
-	poly[2] = 672;
-	poly[3] = 25;
-	poly[4] = 725;
-	poly[5] = 25;
-	poly[6] = 699;
-	poly[7] = 200;
-	fillpoly(4, poly); 
-}
-
-void inferiorDireito()
-{
-	setfillstyle(1, DARKGRAY);		//primeiro triangulo inferior esquerdo
-	setcolor(DARKGRAY);
-	poly[0] = 52;
-	poly[1] = 300;
-	poly[2] = 25;
-	poly[3] = 475;
-	poly[4] = 79;
-	poly[5] = 475;
-	poly[6] = 52;
-	poly[7] = 300;
-	fillpoly(4, poly); 
-	
-	setfillstyle(1, BLACK);			//segundo triangulo inferior esquerdo
-	setcolor(BLACK);
-	poly[0] = 106;
-	poly[1] = 300;
-	poly[2] = 79;
-	poly[3] = 475;
-	poly[4] = 133;
-	poly[5] = 475;
-	poly[6] = 106;
-	poly[7] = 300;
-	fillpoly(4, poly);
-	
-	setfillstyle(1, DARKGRAY);		//terceiro triangulo inferior esquerdo
-	setcolor(DARKGRAY);
-	poly[0] = 160;
-	poly[1] = 300;
-	poly[2] = 133;
-	poly[3] = 475;
-	poly[4] = 187;
-	poly[5] = 475;
-	poly[6] = 160;
-	poly[7] = 300;
-	fillpoly(4, poly);
-
-	setfillstyle(1, BLACK);			//quarto triangulo inferior esquerdo
-	setcolor(BLACK);
-	poly[0] = 214;
-	poly[1] = 300;
-	poly[2] = 187;
-	poly[3] = 475;
-	poly[4] = 241;
-	poly[5] = 475;
-	poly[6] = 214;
-	poly[7] = 300;
-	fillpoly(4, poly);
-	
-	setfillstyle(1, DARKGRAY);		//quinto triangulo inferior esquerdo
-	setcolor(DARKGRAY);
-	poly[0] = 268;
-	poly[1] = 300;
-	poly[2] = 241;
-	poly[3] = 475;
-	poly[4] = 295;
-	poly[5] = 475;
-	poly[6] = 268;
-	poly[7] = 300;
-	fillpoly(4, poly);
-	
-	setfillstyle(1, BLACK);			//sexto triangulo inferior esquerdo
-	setcolor(BLACK);
-	poly[0] = 321,5;
-	poly[1] = 300;
-	poly[2] = 295;
-	poly[3] = 475;
-	poly[4] = 348;
-	poly[5] = 475;
-	poly[6] = 322;
-	poly[7] = 300;
-	fillpoly(4, poly);
-}
-
-void inferiorEsquerdo()
-{
-	setfillstyle(1, BLACK);		//primeiro triangulo inferior direito
-	setcolor(BLACK);
-	poly[0] = 428;
-	poly[1] = 300;
-	poly[2] = 401;
-	poly[3] = 475;
-	poly[4] = 455;
-	poly[5] = 475;
-	poly[6] = 428;
-	poly[7] = 300;
-	fillpoly(4, poly);
-	
-	setfillstyle(1, DARKGRAY);		//segundo triangulo inferior direito
-	setcolor(DARKGRAY);
-	poly[0] = 483;	//soma 54 do [0] anterior
-	poly[1] = 300;	//mantém
-	poly[2] = 456;	//copia o [4] anterior
-	poly[3] = 475;	//mantém
-	poly[4] = 510;	//soma 54 do [2] 
-	poly[5] = 475;	//mantém
-	poly[6] = 483;	//soma 54 do [0] anterior
-	poly[7] = 300;	//mantém
-	fillpoly(4, poly);
-	
-	setfillstyle(1, BLACK);		//terceiro triangulo inferior direito
-	setcolor(BLACK);
-	poly[0] = 537;
-	poly[1] = 300;
-	poly[2] = 510;
-	poly[3] = 475;
-	poly[4] = 564;
-	poly[5] = 475;
-	poly[6] = 537;
-	poly[7] = 300;
-	fillpoly(4, poly);
-	
-	setfillstyle(1, DARKGRAY);		//quarto triangulo inferior direito
-	setcolor(DARKGRAY);
-	poly[0] = 591;
-	poly[1] = 300;
-	poly[2] = 564;
-	poly[3] = 475;
-	poly[4] = 618;
-	poly[5] = 475;
-	poly[6] = 591;
-	poly[7] = 300;
-	fillpoly(4, poly);
-	
-	setfillstyle(1, BLACK);			//quinto triangulo inferior direito
-	setcolor(BLACK);
-	poly[0] = 645;
-	poly[1] = 300;
-	poly[2] = 618;
-	poly[3] = 475;
-	poly[4] = 672;
-	poly[5] = 475;
-	poly[6] = 645;
-	poly[7] = 300;
-	fillpoly(4, poly);
-	
-	setfillstyle(1, DARKGRAY);		//sexto triangulo inferior direito
-	setcolor(DARKGRAY);
-	poly[0] = 699;
-	poly[1] = 300;
-	poly[2] = 672;
-	poly[3] = 475;
-	poly[4] = 725;
-	poly[5] = 475;
-	poly[6] = 699;
-	poly[7] = 300;
-	fillpoly(4, poly); 
-}
 
 void pecasVermelhas()
 {
+	int xcima, ycima, xbaixo, ybaixo;		//coordenadas bola
+	int raio = 20;							//raio bola
+	int i = 0;//contador
 	
 	//Lado direito superior
 	xcima = 52;
@@ -406,6 +141,10 @@ void pecasVermelhas()
 
 void pecasAzuis()
 {
+	int xcima, ycima, xbaixo, ybaixo;		//coordenadas bola
+	int raio = 20;							//raio bola
+	int i = 0;//contador
+	
 	//Lado esquerdo superior
 	xcima = 268;
 	ycima = 44;	
