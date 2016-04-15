@@ -20,6 +20,7 @@ using namespace std;
 #define RIGHT  	77
 #define UP     	72
 #define DOWN   	80
+#define SPACE	32
 #define ESC    	27
 
  //paramentros do putpixel
@@ -59,37 +60,45 @@ int main(){
  move.passo.passo_x = 410;												//posicao inicial da nave em x
  move.passo.passo_y = 380;												//posicao inicial da nave em y
  
- //printFundo(Estrelas);
  
-  for(i = 0; i < 2000; i++){			
-   Estrelas[i].cor = rand () % 15 + 1;									//gerar cores aleatorias
-   Estrelas[i].x = rand () % 799;										//coordenada x aleatoria
-   Estrelas[i].y = rand () % 599;										//coordenada y aleatoria
-   putpixel(Estrelas[i].x, Estrelas[i].y, Estrelas[i].cor);				//desenho aleatorio
-   }		
+	for(int i = 0; i < 2000; i++){            
+   Estrelas[i].cor = rand () % 15 + 1;                                    //gerar cores aleatorias
+   Estrelas[i].x = rand () % 799;                                        //coordenada x aleatoria
+   Estrelas[i].y = rand () % 599;                                        //coordenada y aleatoria
+   }
+ 		
   
  while(tecla != ESC){
 	if (pg == 1) pg = 2; else pg = 1;
 	setactivepage(pg);													//Pagina ativa
-	putpixel(Estrelas[i].x, Estrelas[i].y, Estrelas[i].cor);			//desenho das estrelas
+	printFundo(Estrelas);         									   	//desenho das estrelas
 	cleardevice();														//Limpa tela
+	printFundo(Estrelas);
+    for( int i = 0; i < 2000; i++)
+	putpixel(Estrelas[i].x, Estrelas[i].y, Estrelas[i].cor);			//Desenha estrelas
+													
 	printNave(&move);													//Desenha Nave
-	
+													
     if (kbhit()){
     tecla = getch();
-	if(tecla == LEFT) 	move.passo.passo_x	-= 2;						// Movimenta para esquerda em X
- 	if(tecla == RIGHT)	move.passo.passo_x 	+= 2;						// Movimenta para direita em X
- 	if(tecla == UP) 	move.passo.passo_y	-= 1;						// Movimenta para cima em Y
- 	if(tecla == DOWN) 	move.passo.passo_y	+= 1;						// Movimenta para baixo em Y								
+	if(GetKeyState(VK_LEFT)&0x80)	move.passo.passo_x	-= 5;						// Movimenta para esquerda em X
+ 	if(GetKeyState(VK_RIGHT)&0x80)	move.passo.passo_x 	+= 5;						// Movimenta para direita em X
+ 	if(GetKeyState(VK_UP)&0x80) 	move.passo.passo_y	-= 5;						// Movimenta para cima em Y
+ 	if(GetKeyState(VK_DOWN)&0x80) 	move.passo.passo_y	+= 5;						// Movimenta para baixo em Y	
+	if(tecla == SPACE) {
+		move.passo.passo_x	= rand() % 799;
+		move.passo.passo_y	= rand() % 599;
+	}
 	printNave(&move);
  	}
  	setvisualpage(pg);													//pagina mostrada ao usuário
+ 	
+ 	
  }
 
 getch();
 }
 
- 
  void printNave (TNave *n){
 	
 	int nave [8]; 
@@ -113,12 +122,12 @@ getch();
   	fillpoly(4, nave);
 }
 
-/*void printFundo(TEstrelas stars[]){
- for( int i = 0; i < 2000; i++){			
-   stars[i].cor = rand () % 15 + 1;									//gerar cores aleatorias
-   stars[i].x = rand () % 799;										//coordenada x aleatoria
-   stars[i].y = rand () % 599;										//coordenada y aleatoria
-   putpixel(stars[i].x, stars[i].y, stars[i].cor);					//desenho aleatorio
-   }*/		
+void printFundo(TEstrelas stars[]){
+    for( int i = 0; i < 2000; i++){            
+        putpixel(stars[i].x, stars[i].y, stars[i].cor);
+    }
+}
+
+
 
  
