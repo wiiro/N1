@@ -1,0 +1,145 @@
+#include <stdio.h>
+#include <iostream>
+#include <graphics.h>
+#include <time.h>
+#include <math.h>
+
+#define LEFT   	75
+#define RIGHT  	77
+#define UP     	72
+#define DOWN   	80
+#define ESC    	27
+#define SPACE 	32
+
+#define PI 3.14159265
+
+using namespace std;
+
+typedef struct tipo_bola{
+	int x,y;
+	int posx,posy;
+	int cor;
+}Tbola;
+
+POINT P;
+HWND janela;
+
+
+int main() {
+	
+	char tecla;
+	tecla = 0;
+		
+	srand(time(NULL));
+	
+	Tbola bolas[8];
+	
+	initwindow(800,600);
+	janela = GetForegroundWindow(); 
+	
+	for(int i=0;i<8;i++){
+		bolas[i].x=0;
+		bolas[i].y=0;
+		bolas[i].posx=400;
+		bolas[i].posy=300;
+		bolas[i].cor=i+1;
+		
+	}
+
+	
+	setbkcolor(WHITE);
+	cleardevice();
+
+float cont=0;
+double p=0.0;
+int pg=1;
+double s_45=sin((PI/180)*45);
+double c_45=cos((PI/180)*45);
+int i;
+
+while(p<=200.0){	
+	if (pg == 1) pg = 2; else pg = 1;
+    setactivepage(pg);
+    
+	cleardevice();
+	
+	bolas[0].x=bolas[0].posx;
+	bolas[0].y=(int)(bolas[0].posy+p);
+
+	bolas[1].x=(int)(bolas[1].posx+p*c_45);
+	bolas[1].y=(int)(bolas[1].posy+p*s_45);	
+
+	bolas[2].x=(int)(bolas[2].posx+p);
+	bolas[2].y=bolas[2].posy;
+
+	bolas[3].x=(int)(bolas[3].posx+p*c_45);
+	bolas[3].y=(int)(bolas[3].posy-p*s_45);
+	
+	bolas[4].x=bolas[4].posx;	
+	bolas[4].y=(int)(bolas[4].posy-p);
+
+	bolas[5].x=(int)(bolas[5].posx-p*c_45);
+	bolas[5].y=(int)(bolas[5].posy-p*s_45);
+
+	bolas[6].y=bolas[6].posy;
+	bolas[6].x=(int)(bolas[6].posx-p);
+
+	bolas[7].x=(int)(bolas[7].posx-p*c_45);
+	bolas[7].y=(int)(bolas[7].posy+p*s_45);		
+	
+	for(i=0;i<8;i++){
+		setfillstyle(1, bolas[i].cor);
+		setcolor(bolas[i].cor);
+		fillellipse(bolas[i].x, bolas[i].y, 5, 5);
+	}
+
+
+	setvisualpage(pg);
+	p=p+1;
+	delay(1);
+	
+	if (kbhit()){
+		fflush(stdin);
+		tecla = getch();	
+
+	}
+	
+	
+}
+getch();
+int giro=-1;
+double alfa;
+double grau=0;
+p=PI/180;
+while(tecla!=ESC){
+
+	if (pg == 1) pg = 2; else pg = 1;
+    setactivepage(pg);
+
+	cleardevice();
+	circle(400,300,200);
+	
+	for(i=0;i<8;i++){
+		alfa=(90+i*(45)+grau)*PI/180;
+		bolas[i].x= (int)(400+200*cos(alfa));
+		bolas[i].y= (int)(300+200*sin(alfa));
+		setfillstyle(1, bolas[i].cor);
+		setcolor(bolas[i].cor);
+		fillellipse(bolas[i].x, bolas[i].y, 5, 5);
+	}
+	
+	setvisualpage(pg);
+
+	grau=grau+0.5*giro;
+	delay(10);
+	
+    if (kbhit()){
+      	tecla = getch();
+      	if(tecla==SPACE) giro=giro*(-1);
+    }
+	
+}
+	
+closegraph();
+return(0);
+}
